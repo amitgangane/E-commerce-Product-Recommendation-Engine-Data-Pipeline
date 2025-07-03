@@ -1,0 +1,74 @@
+# models/sources.yml
+version: 2
+
+sources:
+  - name: ecommerce_raw # This is the name you'll use to reference this source in dbt models
+    database: ecommerce-data-pipeline-proj # Your GCP Project ID
+    schema: ecommerce_raw # Your raw BigQuery dataset
+
+    tables:
+      - name: users
+        description: Raw user data from GCS upload.
+        columns:
+          - name: user_id
+            description: Unique identifier for the user.
+            data_type: STRING
+          - name: email
+            description: User's email address.
+            data_type: STRING
+          - name: registration_date
+            description: Date user registered.
+            data_type: STRING # Store as STRING initially, transform to TIMESTAMP later
+          - name: country
+            description: User's country code.
+            data_type: STRING
+          - name: marketing_opt_in
+            description: Boolean indicating marketing opt-in.
+            data_type: BOOLEAN
+
+      - name: products
+        description: Raw product catalog data from GCS upload.
+        columns:
+          - name: product_id
+            description: Unique identifier for the product.
+            data_type: STRING
+          - name: product_name
+            description: Name of the product.
+            data_type: STRING
+          - name: category
+            description: Product category.
+            data_type: STRING
+          - name: price
+            description: Product price.
+            data_type: FLOAT
+          - name: stock_quantity
+            description: Quantity of product in stock.
+            data_type: INTEGER
+
+      - name: interactions
+        description: Raw user interaction events (views, add_to_cart, purchase) from GCS upload.
+        columns:
+          - name: event_id
+            description: Unique ID for each event.
+            data_type: STRING
+          - name: user_id
+            description: User associated with the event.
+            data_type: STRING
+          - name: product_id
+            description: Product associated with the event.
+            data_type: STRING
+          - name: event_type
+            description: Type of interaction (view, add_to_cart, purchase).
+            data_type: STRING
+          - name: event_timestamp
+            description: Timestamp of the event.
+            data_type: STRING # Store as STRING initially, transform to TIMESTAMP later
+          - name: quantity
+            description: Quantity for add_to_cart/purchase events.
+            data_type: INTEGER
+          - name: price_at_event
+            description: Price of product at time of purchase event.
+            data_type: FLOAT
+          - name: session_id
+            description: Session ID for the event.
+            data_type: STRING
