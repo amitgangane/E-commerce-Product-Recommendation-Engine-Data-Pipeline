@@ -3,7 +3,7 @@ WITH source AS (
     SELECT
         user_id,
         email,
-        registration_date,
+        registration_date, -- This is already TIMESTAMP, no PARSE_TIMESTAMP needed
         country,
         marketing_opt_in
     FROM
@@ -13,7 +13,7 @@ WITH source AS (
 SELECT
     user_id,
     email,
-    PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', registration_date) AS registered_at,
+    registration_date AS registered_at, -- Simply rename, it's already a TIMESTAMP
     country,
     marketing_opt_in
 FROM
